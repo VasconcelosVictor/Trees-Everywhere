@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %} <title>Adicionar Planta</title> {% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row justify-content-center">
+      <div class="col-md-6">
+          <div class="card mt-5">
+              <div class="card-header text-center">
+                  <h4>Adicionar Planta</h4>
+              </div>
+              <div class="card-body">
+                  <form id="myForm" method="post"  action="{% url 'add_tree' %}">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="form-group">
+                        <label for="id_plant">Planta:</label>
+                        {{ form.name }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_scientific_name">Nome Científico:</label>
+                        {{ form.scientific_name }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_age">Idade:</label>
+                        {{ form.age}}
+
+                    </div>
+                    <div style="margin-top: 20px;" class="form-group text-center">
+                        <h5>Onde foi plantada?</h5>
+                    </div>
+                    
+                    <div class="form-group">
+                          <label for="id_latitude">Latitude:</label>
+                          {{ form.latitude }}
+                      </div>
+                      <div class="form-group">
+                          <label for="id_longiture">Longiture:</label>
+                          {{ form.longiture }}
+                      </div>
+                      <button id="submit"  type="submit" class="btns-all">Salvar</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+  
+
+{% endblock %}

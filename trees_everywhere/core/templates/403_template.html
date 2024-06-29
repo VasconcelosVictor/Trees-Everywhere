@@ -1,0 +1,16 @@
+{% extends 'base_clean.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="text-center">
+        <h2 class="">403 Forbidden</h2>
+        <p >Parece que você não tem permissao pra acessar essa pagina </p>
+        <p><a style="font-weight: 700; font-size: 25px;" href="{% url 'home' %}"> <i class='bx bx-arrow-back bx-sm bx-tada bx-rotate-180' ></i> VOLTAR PARA HOME</a></p>
+        <img class="img-fluid" style="border-radius: 30px; margin-bottom: 50px; max-height: 500px ;" src="{% static 'img/response/403.jpg'%}" alt="imagem-de-403">
+    </div>
+    
+
+</div>
+
+{% endblock %}

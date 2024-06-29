@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title%} <title>Contas</title> {% endblock %}
+
+{% block content  %}
+
+<div class="container">
+  <div class="text-center">
+    <img  class="img-fluid" width="400px" style="margin-bottom: 30px; border-radius: 20px;"  src="{% static 'img/home/account.jpg' %}" alt="home-img">
+  </div>
+  <div class="section-title">
+    <h2 >Contas</h2>
+  </div>
+  
+
+  <div class="float-right" style="max-width: 18%;" >
+    <a style="font-weight: 700;" class="btns-all text-center " href="{% url 'create_account' %}" >Adicionar Conta <i class='bx bxs-plus-circle' ></i></a>
+  </div>
+  
+  <div class="list-group">
+    {% for account in accounts %}
+      <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+        <a href="{% url 'account_detail' account.id %}" class="d-flex w-100  list-group-item-action">
+          <div>
+            <h5 class="mb-1">{{ account.name }}</h5>
+            <small style="font-weight: 600;" class="{% if account.active %} default-color {% else %} text-danger {% endif %}">
+              {% if account.active %} Conta Ativa <i class='bx bx-check'></i> {% else %} Conta Inativa <i class='bx bx-x' ></i> {% endif %}
+            </small>
+            <p class="mb-1">Quantidade de Usuários: {{ account.users.count }}</p>
+          </div>
+        </a>
+        <button type="button" id="confirm-{{ account.id }}" class=" {% if account.active %} btn-danger-color {% else %} btn-default-color {% endif %}  ml-auto"> {% if account.active %} Desativar {% else %} Ativar {% endif %}</button>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  {% for account in accounts %}
+  document.querySelector('#confirm-{{ account.id }}').onclick = function(){
+      Swal.fire({
+        title: 'Status Alterado!',
+        text: 'Você alterou o status dessa Conta :)',
+        icon: 'success',
+        confirmButtonText: 'Confirmar',
+        confirmButtonColor: '#5cb874' 
+      }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href ="{% url 'update_status' account.id %}"
+        }
+      });
+      return false;
+    }
+  {% endfor %}
+
+</script>
+
+{% endblock %}

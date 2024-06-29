@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title%} <title>Tree Everywhere</title> {% endblock %}
+{% load static %}
+{% block content  %}
+
+<div style="margin-bottom: 50px;" class="container">
+  <div class="text-center">
+    <img class="img-fluid" width="400px" style="margin-bottom: 30px; border-radius: 20px;"  src="{% static 'img/home/home.jpg' %}" alt="home-img">
+  </div>
+ 
+  <div class="section-title">
+    <h2 >Suas Arvores</h2>
+    <p>Apenas as Arvores plantadas por você</p>
+  </div>
+
+ 
+  
+
+  <div class="list-group">
+    {%if page_obj %}
+    <div class="pagination">
+      {% include "paginate.html" %}
+    </div>
+    <div>
+      <p>Itens {{count}} </p>
+      
+      <div class="float-right" style="max-width: 18%;" >
+        <a style="font-weight: 700;" class="btns-all text-center " href="{% url 'add_tree' %}" >Adicionar Arvore <i class='bx bxs-plus-circle' ></i></a>
+      </div>
+      <hr>
+    </div>
+    
+      {% for tree in page_obj %}
+        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <a href="{% url 'tree_detail' tree.id %}" class="d-flex w-100  list-group-item-action">
+            <div>
+              <h5 class="mb-1">{{ tree.plant.name }}</h5>
+              <small style="font-weight: 600;">
+                {{tree.plant.scientific_name}}
+              </small>
+              <p class="mb-1">Idade: {{ tree.age }} anos </p>
+            </div>
+          </a>
+          
+        </div>
+      {% endfor %}
+    {% else %}
+    <div class="pagination">
+      {% include "paginate.html" %}
+    </div>
+    <div>
+      <p>Itens {{count}} </p>
+      <div class="float-right" style="max-width: 18%;" >
+        <a style="font-weight: 700;" class="btns-all text-center " href="{% url 'add_tree' %}" >Adicionar Arvore <i class='bx bxs-plus-circle' ></i></a>
+      </div>
+      <hr>
+    </div>
+      <p>Você ainda não tem plantas adicione uma planta.</p> 
+    {% endif %}     
+  </div >
+</div>
+
+{% endblock %}

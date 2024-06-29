@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title%} <title>Lista de Arvores</title> {% endblock %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+  <div class="text-center">
+    <img  class="img-fluid" width="400px" style="margin-bottom: 30px; border-radius: 20px;"  src="{% static 'img/home/trees.jpg' %}" alt="home-img">
+  </div>
+  
+  <div class="section-title">
+    <h2>Lista de Arvores</h2>
+    <p>Arvores plantadas por todos os usuários da conta  ( <strong>{{account.name | upper }}</strong> )</p>
+  </div>
+  
+
+  
+  {%if page_obj %}
+  <div class="pagination">
+    {% include "paginate.html" %}
+  </div>
+
+  <div>
+    <p>Itens {{count}} </p>
+    <hr>
+    
+  </div>
+
+    <div class="list-group">
+      {% for tree in page_obj %}
+      <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+        <a href="{% url 'tree_detail' tree.id %}" class="d-flex w-100  list-group-item-action">
+          <div>
+            <h5 class="mb-1">{{tree.plant.name}}</h5>
+            <p style="font-weight: 600;" class="">
+              {{tree.plant.scientific_name}}
+            </p>
+            <p style="font-weight: 600;" class="">
+              Usuario: {{tree.user | upper}}
+            </p>
+            <p style="font-weight: 600;" class="">
+              Plantada em: {{tree.planted_at}}
+            </p>
+
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+  <div class="pagination">
+    {% include "paginate.html" %}
+  </div>
+
+  <div>
+    <p>Itens {{count}} </p>
+  </div>
+  <hr>
+  <p style="margin-bottom: 70px;" class="text-center">Ninguém plantou arvores nessa conta. <a style="font-weight: 700;"  href="{% url 'add_tree' %}">Clique aqui</a> pra começar a plantar. </p>
+  {% endif%}  
+</div>
+
+{% endblock %}

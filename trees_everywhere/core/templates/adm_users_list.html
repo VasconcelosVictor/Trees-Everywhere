@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content  %}
+
+<div class="container">
+
+  <div class="text-center">
+    <img  class="img-fluid" width="400px" style="margin-bottom: 30px; border-radius: 20px;"  src="{% static 'img/home/earth.jpg' %}" alt="home-img">
+  </div>
+  <div class="section-title">
+    <h2>Usuários</h2>
+  </div>
+  
+
+  <div class="float-right" style="max-width: 18%;" >
+    <a style="font-weight: 700;" class="btns-all text-center" href="{% url 'register' %}" >Adicionar Usuário<i class='bx bxs-plus-circle' ></i></a>
+  </div>
+  
+  <div class="list-group">
+    {% for user in users %}
+      <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+        <a href="{% url 'profile' user.id %}" class="d-flex w-100  list-group-item-action">
+          <div>
+            <h5 class="mb-1">{{ user.username}}</h5>
+            <small style="font-weight: 600;" class="">
+                {{user.first_name}}
+            </small>
+            <p class="mb-1">Email: {{ user.email }}</p>
+          </div>
+        </a>
+        <a href="{% url 'delete_user' user.id %}" > deletar</a>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

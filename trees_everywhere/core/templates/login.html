@@ -1,0 +1,55 @@
+{% extends 'base_clean.html' %}
+
+<style>
+    .small-errors {
+    color: red;
+    font-size: 0.9em;
+}
+
+</style>
+{% block content %}
+
+<div class="container">
+  <div class="row justify-content-center">
+      <div class="col-md-6">
+          <div class="card mt-5">
+              <div class="card-header text-center">
+                  <h4>Login</h4>
+              </div>
+              <div class="card-body">
+                  <form method="post"  action="{% url 'login' %}">
+                    {% csrf_token %}
+                    
+                      <div class="form-group">
+                          <label for="id_username">Username:</label>
+                          {{ form.username }}
+                          <div class="smal-erros">
+                            {{ form.username.errors }}
+                          </div>
+                          
+                      </div>
+                      <div class="form-group">
+                          <label for="id_password">Password:</label>
+                          {{ form.password }}
+                          <div class="smal-erros">
+                            {{ form.password.errors }}
+                          </div> 
+                      </div>
+                      <div class="form-group">
+                        <label for="id_password">Conta:</label>
+                        {{ form.account }}
+                        <div class="smal-erros">
+                            {{ form.account.errors }}
+                        </div>
+                    </div>
+                      <button id="btn-login" type="submit" class="">Login</button>
+                      <hr>
+                     
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

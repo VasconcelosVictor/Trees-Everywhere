@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container" style="margin-top: 80px; margin-bottom: 80px;">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-5">
+                <div class="card-header text-center">
+                    {% if account %}
+                        <h4>Editar Conta</h4>
+                    {% else %}
+                        <h4>Cadastrar Conta</h4>
+                    {% endif %}        
+
+                </div>
+                <div class="card-body">
+                {% if account %}
+                    <form method="post" action="{% url 'edit_account' account.id %}" >
+                {% else %}
+                    <form method="post" action="{% url 'create_account'%}">
+                {% endif %}    
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div class="form-group">
+                            <label for="id_name">Nome:</label>
+                            {{ form.name }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_active">Ativo:</label>
+                            {{ form.active }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_users">Users:</label>
+                            {{ form.users }}
+                        </div>
+                        <button  type="submit" class="btns-all">Salvar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#id_users").select2({
+        allowClear: true, 
+        placeholder: 'Selecione um Usuario',
+    })
+</script>
+
+{% endblock %}

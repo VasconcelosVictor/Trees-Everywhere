@@ -1,0 +1,89 @@
+{% extends 'base_clean.html' %}
+{% block title%} <title>Cadastro</title> {% endblock %}
+{% block content %}
+
+<style>
+    .smal-erros{
+        color: red;
+        font-size: 0.875rem;
+    }
+</style>
+
+<div class="container">
+  <div class="row justify-content-center">
+      <div class="col-md-6">
+          <div class="card mt-5">
+              <div class="card-header text-center">
+                  <h4>Cadastro</h4>
+              </div>
+              <div class="card-body">
+                <form method="post" action="{% url 'register' %}">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="form-group">
+                        <label for="id_username">Username:</label>
+                        {{ form.username }}
+                        <div class="smal-erros">
+                            {{ form.username.errors }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_first_name">Nome:</label>
+                        {{ form.first_name }}
+                        <div class="smal-erros">
+                            {{ form.first_name.errors }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_email">Email:</label>
+                        {{ form.email }}
+                        <div class="smal-erros">
+                            {{ form.email.errors }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password1">Senha:</label>
+                        {{ form.password1 }}
+                        <div class="smal-erros">
+                            {{ form.password1.errors }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password2">Confirme a Senha:</label>
+                        {{ form.password2 }}
+                        <div class="smal-erros">
+                            {{ form.password2.errors }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_account">Vincular Usuario a uma Conta:</label>
+                        {{ form.account }}
+                        <div class="smal-erros">
+                            {{ form.account.errors }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_bio">Sobre:</label>
+                        {{ form.bio }}
+                        <div class="smal-erros">
+                            {{ form.bio.errors }}
+                        </div>
+                    </div>
+                    <button id="btn-register" type="submit" class="btn btn-primary">Cadastrar</button>
+                </form>
+            </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<script>
+    $("#id_account").select2({
+        allowClear: true, 
+        placeholder: 'Selecione uma Conta',
+    })
+</script>
+
+
+
+{% endblock %}
