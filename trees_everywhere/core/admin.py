@@ -12,7 +12,7 @@ class UserAdmin(admin.ModelAdmin):
    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff')
 
 class AccountAdmin(admin.ModelAdmin):
-   list_display = ('name', 'active', )
+   list_display = ('name', 'active' )
    list_filter = ('active',)
    search_fields = ('name',)
 
