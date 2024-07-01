@@ -28,6 +28,7 @@
     <div class="list-group">
       {% for tree in page_obj %}
       <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+        
         <a href="{% url 'tree_detail' tree.id %}" class="d-flex w-100  list-group-item-action">
           <div>
             <h5 class="mb-1">{{tree.plant.name}}</h5>
@@ -43,6 +44,7 @@
 
           </div>
         </a>
+
       </div>
       {% endfor %}
     </div>

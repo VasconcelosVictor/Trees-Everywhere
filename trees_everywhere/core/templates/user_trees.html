@@ -3,6 +3,16 @@
 {% load static %}
 {% block content  %}
 
+<style>
+  #map { 
+    height: 500px;
+   width: 100%;
+   margin-top: 50px;
+   margin-bottom: 50px;
+   
+   }
+</style>
+
 <div style="margin-bottom: 50px;" class="container">
   <div class="text-center">
     <img class="img-fluid" width="400px" style="margin-bottom: 30px; border-radius: 20px;"  src="{% static 'img/home/home.jpg' %}" alt="home-img">
@@ -40,6 +50,8 @@
               </small>
               <p class="mb-1">Idade: {{ tree.age }} anos </p>
               <p class="mb-1">Cadastrado em : {{ tree.planted_at }} anos </p>
+
+              <button type="button" id="confirm-{{ tree.id }}"   class=" btn-danger-color  ml-auto">Excluir</button>
             </div>
           </a>
           
@@ -59,6 +71,76 @@
       <p>Você ainda não tem plantas adicione uma planta.</p> 
     {% endif %}     
   </div >
+  <div id="map"></div>
+
 </div>
 
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+            // Inicializa o mapa
+            var map = L.map('map').setView([0, 0], 2); // Inicializa o mapa com zoom global
+            
+            // Adiciona a camada de tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Dados das árvores (dinamicamente gerados pelo Django)
+            var trees = [
+                {% if page_obj %}
+                    {% for tree in page_obj %}
+                        {
+                            latitude: parseFloat("{{ tree.latitude }}".replace(',', '.')),
+                            longitude: parseFloat("{{ tree.longiture }}".replace(',', '.')),
+                            name: '{{ tree.plant }}'
+                        }{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                {% endif %}
+            ];
+
+            // Ícone personalizado
+            var customIcon = L.icon({
+                iconUrl: "{% static 'img/favicon.png' %}",  
+                iconSize: [28, 35],            
+                iconAnchor: [14, 35],          
+                popupAnchor: [0, -35],         
+                shadowSize: [28, 35],          
+                shadowAnchor: [14, 35]         
+            });
+
+            
+            trees.forEach(function(tree) {
+                L.marker([tree.latitude, tree.longitude], {icon: customIcon}).addTo(map)
+                    .bindPopup(tree.name)
+                    .openPopup();
+            });
+
+            
+           
+                    
+        });
+
+</script>
+
+<script>
+  {% if page_obj %}
+            {% for tree in page_obj %}
+              document.querySelector('#confirm-{{ tree.id }}').onclick = function(){
+              Swal.fire({
+                title: 'Arvore Excluida!',
+                text: 'Você Excluiu a Arvore :)',
+                icon: 'success',
+                confirmButtonText: 'Confirmar',
+                confirmButtonColor: '#5cb874' 
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href ="{% url 'delete_tree' tree.id %}"
+                }
+              });
+              return false;
+            }
+            {% endfor %}
+        {% endif %}            
+</script>
 {% endblock %}

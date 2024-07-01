@@ -83,13 +83,12 @@ class PlantForm(forms.Form):
         tree = kwargs.pop('tree', None)
         super(PlantForm, self).__init__(*args, **kwargs)
 
-        self.fields['latitude'].widget.attrs['class'] = 'form-control'
-        self.fields['longiture'].widget.attrs['class'] = 'form-control'
+        self.fields['latitude'].widget.attrs['class'] = 'form-control '
+        self.fields['longiture'].widget.attrs['class'] = 'form-control '
         self.fields['age'].widget.attrs['class'] = 'form-control'
 
         if tree:
-            self.fields['name'].initial = tree.plant.name
-            self.fields['scientific_name'].initial = tree.plant.scientific_name
+            self.fields['name'].initial = tree.plant
             self.fields['latitude'].initial = tree.latitude
             self.fields['longiture'].initial = tree.longiture
             self.fields['age'].initial = tree.age

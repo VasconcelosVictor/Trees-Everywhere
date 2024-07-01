@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %} <title>Detalhes da Arvore</title>   {% endblock %}
 {% block content  %}
+<style>
+   #map { 
+    height: 300px;
+    width: 100%;
+   
+   }
+</style>
 
-<div class="container">
+<div style="margin-top: 60px;" class="container">
 
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -38,6 +46,10 @@
             </div>
         </div>
     </div>
+    <hr>
+    <div id="map"></div>
+
+    <hr>
 
     <h4 style="margin-top: 50px;">Lista de {{tree.plant.name}} Plantados</h4>
 
@@ -76,10 +88,45 @@
 
     {% endif %}
 
-
-    
-
 </div>
+
+<script>
+  var name = '{{tree.plant.name}}'
+  var longiture = "{{ tree.longiture  }}"
+  var latitude = '{{ tree.latitude  }}'
+  console.log(longiture, latitude)
+  var longiture = parseFloat(longiture.replace(',','.'));
+  var latitude = parseFloat(latitude.replace(',','.'));
+
+  console.log(longiture,latitude )
+  
+  document.addEventListener('DOMContentLoaded', function() {
+            
+            var map = L.map('map').setView([latitude, longiture], 8); 
+            
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+           
+            var customIcon = L.icon({
+                iconUrl: "{% static 'img/favicon.png' %}",  
+                iconSize: [28, 35],            
+                iconAnchor: [22, 94],          
+                popupAnchor: [-3, -76],        
+                shadowSize: [28, 35],          
+                shadowAnchor: [22, 94]         
+            });
+
+            
+            L.marker([latitude, longiture], {icon: customIcon}).addTo(map)
+                .bindPopup(name)
+                .openPopup();
+            
+            
+        });
+</script>   
 
 
 {% endblock %}

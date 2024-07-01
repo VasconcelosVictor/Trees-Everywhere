@@ -2,6 +2,32 @@
 {% block title %}<title>Editar Arvore</title> {% endblock %}
 {% block content %}
 
+<style>
+    .btn-open-map{
+        font-family: "Raleway", sans-serif;
+        font-weight: 500;
+        font-size: 1em;
+        letter-spacing: 1px;
+        display: inline-block;
+        padding: 7px 16px;
+        border-radius: 4px;
+        transition: 0.5s;
+        line-height: 1;
+        color: #fff;
+        animation-delay: 0.8s;
+        margin: 20px 0;
+        width: 100%;
+        background: #5c8cb8;
+
+    }
+
+    #map { 
+    height: 400px;
+    width: 100%;
+   
+   }
+</style>
+
 <div class="container">
   <div class="row justify-content-center">
       <div class="col-md-6">
@@ -38,6 +64,9 @@
                           <label for="id_longiture">Longiture:</label>
                           {{ form.longiture }}
                       </div>
+                      <div class="col-md-4" > 
+                        <a type="button" href="#" onclick="openMap();" href="#" data-bs-toggle="modal" data-bs-target="#openMap" class="btn-open-map">Abrir mapa</a>
+                      </div>
                       <button type="submit" class="btns-all">Salvar</button>
 
                   </form>
@@ -45,6 +74,117 @@
           </div>
       </div>
   </div>
+
+ 
+
 </div>
+
+
+<div class="container">
+    <div class="modal fade" id="openMap" tabindex="-1" aria-labelledby="openMap" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered"> <!-- Adicione a classe modal-dialog-centered -->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="openMapLabel">Clique pra definir longitude e latitude</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            
+                <div class="col-lg-12" id="map"></div>
+             
+            </div>
+          </div>
+        </div>
+        </div>
+    
+</div>
+
+
+    
+
+
+<script>
+
+    $("#id_name").select2({
+            allowClean : true,
+            placeholder: "Nome da planta",
+            width: '100%'
+        })
+    $('#id_latitude').attr('readonly', true)
+    $("#id_longiture").attr('readonly', true)
+    
+
+    
+
+    document.addEventListener('DOMContentLoaded', function() {
+            var map; 
+
+            
+            function initializeMap() {
+                map = L.map('map').setView([0, 0], 2); 
+                
+                
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+
+                
+                var marker;
+                
+                
+                map.on('click', function(e) {
+                    var lat = e.latlng.lat.toFixed(6);
+                    var lng = e.latlng.lng.toFixed(6);
+                    
+                    // Atualiza os campos de latitude e longitude
+                    var latInput = document.getElementById('id_latitude');
+                    var lngInput = document.getElementById('id_longiture');
+                    
+                    if (latInput && lngInput) {
+                        latInput.value = lat;
+                        lngInput.value = lng;
+                    }
+                    
+                    
+                    if (marker) {
+                        map.removeLayer(marker);
+                    }
+                    
+                    
+                    marker = L.marker([lat, lng]).addTo(map);
+
+                    Swal.fire({
+                            title: 'Localização Adicionada!',
+                            text: 'Você adicionou a Longitude e Latitute com sucesso :)',
+                            icon: 'success',
+                            confirmButtonText: 'Confirmar',
+                            confirmButtonColor: '#5cb874' 
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                console.log('deu certo')
+
+                                var modalElement = document.getElementById('openMap');
+                                var modalInstance = bootstrap.Modal.getInstance(modalElement);
+                                modalInstance.hide();
+                                
+                            }
+                        });
+                });
+            }
+
+            
+            var modal = document.getElementById('openMap');
+            modal.addEventListener('shown.bs.modal', function () {
+                if (!map) {
+                    initializeMap();
+                } else {
+                    map.invalidateSize();
+                }
+            });
+        });
+
+    
+    
+</script>
 
 {% endblock %}

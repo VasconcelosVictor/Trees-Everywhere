@@ -176,7 +176,7 @@ def edit_profile(request,id=None):
             accounts = form.cleaned_data['accounts']
             user.accounts.set(accounts)
             user.save()
-            return redirect(reverse('profile', args=[user.id]))
+            return redirect(reverse('profile'))
         else:
             for error in list(form.errors.values()):
                 print(error)
@@ -296,10 +296,7 @@ def edit_tree(request,id):
     if request.method == "POST":
         form = PlantForm(request.POST, tree=tree)
         if form.is_valid():
-            plant = tree.plant
-            plant.name = form.cleaned_data['name']
-            plant.scientific_name = form.cleaned_data['scientific_name']
-            plant.save()
+
             tree.age = form.cleaned_data['age']
             tree.latitude = form.cleaned_data['latitude']
             tree.longiture = form.cleaned_data['longiture']
@@ -310,6 +307,14 @@ def edit_tree(request,id):
         form = PlantForm( tree=tree)
 
     return render(request, 'edit_tree.html', {'form': form, 'tree': tree})
+
+
+@login_required
+def delete_tree(request,id):
+    tree = PlantedTree.objects.get(id=id)
+
+    tree.delete()
+    return redirect('home')
 
 
 
