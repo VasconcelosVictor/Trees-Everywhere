@@ -5,6 +5,14 @@
         "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
     }],
     "routes": [
+    {
+        "src": "/static/(.*)",
+        "dest": "trees_everywhere/static/"
+    },
+    {
+        "src": "/media/(.*)",
+        "dest": "trees_everywhere/media/"
+    },
       {
         "src": "/(.*)",
         "dest": "trees_everywhere/wsgi.py"
