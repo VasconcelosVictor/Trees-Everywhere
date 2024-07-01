@@ -6,6 +6,7 @@ def permission_required(func):
     def _decorator(request, *args, **kwargs):
         
         if request.user.is_authenticated:
+            print(request.headers.get('Cookie'))
             # session id_account
             active_account_id = request.session['active_account_id']
             

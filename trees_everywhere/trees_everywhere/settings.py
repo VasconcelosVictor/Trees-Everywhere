@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-d28kgj1jace&65w_0z01+g+lq1z$sy^@93t*z1#0hjbots)bvm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.vercel.app']
 
 TESTING = True
 
@@ -118,8 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
+
 
 LANGUAGE_CODE = 'pt-br'
 
@@ -128,6 +127,20 @@ TIME_ZONE = 'America/Manaus'
 USE_I18N = True
 
 USE_TZ = True
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        # Outras autenticações, se necessário
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+        # Outras permissões, se necessário
+    ],
+}
+
 
 
 # Static files (CSS, JavaScript, Images)
