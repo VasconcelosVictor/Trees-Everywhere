@@ -82,7 +82,40 @@
 - **Adicionar Árvore:** Navegue até a página de adicionar árvore, clique no mapa para definir a localização, preencha os detalhes e salve.
 - **Visualizar Detalhes:** Clique em cima de uma arvore que você plantou e visualize as informações sobre ela.
 - **Perfil:** Em perfil você pode visuzualizar suas informações e também edita-las.
-- 
+
+## Api
+*METODO GET*
+<br>
+Headers: 
+Cookie : csrftoken=seu crftoken; sessionid=seusessionid
+- Rota: api/v1/trees/
+- Response:
+- [
+	{
+		"id": 16,
+		"plant": 17,
+		"latitude": "-6.286634",
+		"longiture": "-35.117798",
+		"planted_at": "2024-06-30T23:25:12.979152-04:00"
+	},
+	{
+		"id": 14,
+		"plant": 12,
+		"latitude": "-3.102978",
+		"longiture": "-59.970245",
+		"planted_at": "2024-06-30T17:10:08.733981-04:00"
+	},
+	{
+		"id": 19,
+		"plant": 16,
+		"latitude": "-3.097450",
+		"longiture": "-59.959517",
+		"planted_at": "2024-07-01T13:34:05.961504-04:00"
+	}
+]
+  
+  
+  
 
 ## Contribuição
 
