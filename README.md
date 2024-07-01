@@ -141,5 +141,5 @@ Se você deseja contribuir para o projeto, siga estas etapas:
 
 - **Nome:** Victor Vasconcelos
 - **Email:** [meuemail](mailto:victorvasoncelos6x@hmail.com)
-- **LinkedIn:** [Seu Perfil LinkedIn](https://www.linkedin.com/in/victor-vasconcelos-barbosa/)
+- **LinkedIn:** [meu linkedin](https://www.linkedin.com/in/victor-vasconcelos-barbosa/)
 
