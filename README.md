@@ -25,18 +25,21 @@
     ```
 
 2. **Crie e ative um ambiente virtual:**
+
     ```bash
+    cd trees_everywhere/
     python -m venv venv
     source venv/bin/activate  # No Windows, use `venv\Scripts\activate`
     ```
 
-3. **Instale as dependências do backend:**
+4. **Instale as dependências do backend:**
     ```bash
     pip install -r requirements.txt
     ```
 
-4. **Configure o banco de dados:**
-    Modifique as configurações de Banco de Dados pra sua Base.
+5. **Configure o banco de dados:**
+
+    Crie um banco de dados na sua maquina e modifique as configurações de Banco de Dados pra sua Base.
     ```python
     DATABASES = {
         'default': {
@@ -56,7 +59,7 @@
     python manage.py migrate
     ```
 
-5. **Modifique o ALLOWED_HOSTS**
+6. **Modifique o ALLOWED_HOSTS**
 - no arquivo settings.py modifique a constante ALLOWED_HOSTS 
 ```python
 DEBUG=True
