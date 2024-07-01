@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-d28kgj1jace&65w_0z01+g+lq1z$sy^@93t*z1#0hjbots)bvm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 
 TESTING = True
 
@@ -80,7 +80,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'trees_everywhere.wsgi.application'
+
+WSGI_APPLICATION = 'trees_everywhere.wsgi.app'
 
 
 # Database
