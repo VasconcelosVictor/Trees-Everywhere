@@ -10,10 +10,9 @@
   
   <div class="section-title">
     <h2>Lista de Arvores</h2>
-    <p>Arvores plantadas por todos os usuários da conta  ( <strong>{{account.name | upper }}</strong> )</p>
+    <p class="sub-title">Arvores plantadas pelo seu Usuario em todas as contas que ele faz parte </p>
   </div>
   
-
   
   {%if page_obj %}
   <div class="pagination">
@@ -39,7 +38,7 @@
               Usuario: {{tree.user | upper}}
             </p>
             <p style="font-weight: 600;" class="">
-              Plantada em: {{tree.planted_at}}
+              Cadastrada em: {{tree.planted_at}}
             </p>
 
           </div>

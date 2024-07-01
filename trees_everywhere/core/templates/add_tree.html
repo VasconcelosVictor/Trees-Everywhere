@@ -19,10 +19,6 @@
                         {{ form.name }}
                     </div>
                     <div class="form-group">
-                        <label for="id_scientific_name">Nome Científico:</label>
-                        {{ form.scientific_name }}
-                    </div>
-                    <div class="form-group">
                         <label for="id_age">Idade:</label>
                         {{ form.age}}
 
@@ -46,6 +42,15 @@
       </div>
   </div>
 </div>
+
+<script>
+    $("#id_name").select2({
+        allowClean : true,
+        placeholder: "Nome da planta",
+        width: '100%'
+    })
+
+</script>
   
 
 {% endblock %}

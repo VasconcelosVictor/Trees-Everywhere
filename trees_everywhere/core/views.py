@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth import login, authenticate, logout
@@ -14,8 +15,10 @@ def user_login(request):
         if form.is_valid():
             user = form.get_user()
             account = form.cleaned_data.get('account')
-            login(request, user)
             request.session['active_account_id'] = account.id
+            request.session.save()
+            login(request, user)
+            
             return redirect('home')
     else:
         form = CustomAuthenticationForm()
@@ -131,19 +134,34 @@ def account_delete(request,id):
     account.delete()
     return redirect('account_list')
 
+def change_account(request):
+    account = request.GET.get('account')
+    account = Account.objects.get(id=int(account))
+    request.session['active_account_id'] = account.id
+    print(account)
+
+    return JsonResponse({'success': True}, status=200)
+
+
 # PROFILE
 @login_required
-def profile(request,id):
-    user = get_object_or_404(CustomUser, pk=id)
+@permission_required
+def profile(request):
+
+    user = request.user
+    account  = Account.objects.get(id=int(request.session['active_account_id']))
     profile = user.get_profile()
     trees = PlantedTree.objects.filter(user=user)
     count = trees.count()
     
-    return render(request, 'profile.html' , {'user':user, 'profile': profile,'count': count})
+    return render(request, 'profile.html' , {'user':user, 'profile': profile,'count': count, 'account': account})
 
 @login_required
+@permission_required
 def edit_profile(request,id=None):
     user = get_object_or_404(CustomUser, pk=id)
+    account  = Account.objects.get(id=int(request.session['active_account_id']))
+    
     if request.method == "POST":
         form = ProfileForm(request.POST, user=user)
         if form.is_valid():
@@ -165,9 +183,10 @@ def edit_profile(request,id=None):
     else:
         form = ProfileForm(user=user)       
 
-    return render(request, 'edit_profile.html', {'form': form, 'user': user})
+    return render(request, 'edit_profile.html', {'form': form, 'user': user, 'account' : account})
 
 @login_required
+@permission_required
 def create_profile(request,id,id_profile=None ):
     user = get_object_or_404(CustomUser, pk=id)
     profile = get_object_or_404(Profile, pk=id_profile)
@@ -185,10 +204,12 @@ def create_profile(request,id,id_profile=None ):
 
 #  Trees views 
 @login_required
+@permission_required
 def home(request):
-    trees = PlantedTree.objects.filter(user=request.user).order_by('plant')
+    
+    account  = Account.objects.get(id=int(request.session['active_account_id']))
+    trees = PlantedTree.objects.filter(user=request.user ).order_by('plant')
     count = trees.count()
-    account  =Account.objects.get(id=int(request.session['active_account_id']))
 
 
     paginator = Paginator(trees, 5)
@@ -196,14 +217,25 @@ def home(request):
     page_obj = paginator.page(page_num)
 
     return render(request, 'user_trees.html', {'page_obj': page_obj,'count': count})
-    
 
 @login_required
+@permission_required
+def add_plant(request):
+    name = request.GET.get('name')
+    scientific_name = request.GET.get('scientific_name')
+    plant = Plant.objects.create(name=name, scientific_name= scientific_name)
+    plant.save()
+
+    return JsonResponse({'success':'success'})
+
+
+@login_required
+@permission_required
 def add_tree(request):
     if request.method == 'POST':
         form = PlantForm(request.POST)
         if form.is_valid():
-            tree = form.save()
+            tree = form.cleaned_data['name']
             latitude = float(form.cleaned_data['latitude'])
             longiture = float(form.cleaned_data['longiture'])
             user = request.user
@@ -222,27 +254,34 @@ def add_tree(request):
     return render(request, 'add_tree.html', {'form': form})
 
 @login_required
-
+@permission_required
 def user_trees(request):
     user = request.user
     account = Account.objects.get(id=int(request.session['active_account_id']))
+    
     if user.is_superuser:
         trees = PlantedTree.objects.all()
     else:
+        trees = PlantedTree.objects.filter(account__in=user.accounts.all()).order_by('plant') 
         
-        trees = PlantedTree.objects.filter(account=account) 
-
     count = trees.count()
     paginator = Paginator(trees, 5)
     page_num = request.GET.get('page', 1)
     page_obj = paginator.page(page_num)
 
-    return render(request, 'home.html', {"user": user, "page_obj":page_obj,'count': count, 'account': account })
+    return render(request, 'all_trees.html', {"user": user, "page_obj":page_obj,'count': count, 'account': account })
 
 @login_required
+@permission_required
 def tree_detail(request, pk):
+    user = request.user
+    acccount = Account.objects.get(id=int(request.session['active_account_id']))
     tree = get_object_or_404(PlantedTree, pk=pk)
-    planted_tree = PlantedTree.objects.filter(plant=tree.plant).order_by('-planted_at')
+    planted_tree = PlantedTree.objects.filter(plant=tree.plant, account__in=user.accounts.all()).order_by('-planted_at')
+
+    if tree.user.id != user.id:
+        return render(request, '403_template.html', status=403)
+    
     count = planted_tree.count()
     paginator = Paginator(planted_tree, 5)
     page_num = request.GET.get('page', 1)
@@ -251,6 +290,7 @@ def tree_detail(request, pk):
     return render(request, 'tree_detail.html', {'tree': tree, 'page_obj': page_obj, 'count': count})
 
 @login_required
+@permission_required
 def edit_tree(request,id):
     tree = get_object_or_404(PlantedTree, pk=id)
     if request.method == "POST":
@@ -274,8 +314,4 @@ def edit_tree(request,id):
 
 
 
-@login_required
-def account_trees(request):
-    accounts = request.user.contas.all()
-    trees = PlantedTree.objects.filter(user__contas__in=accounts).distinct()
-    return render(request, 'account_trees.html', {'trees': trees})
+

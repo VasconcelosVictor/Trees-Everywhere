@@ -48,7 +48,7 @@
                             {{ form.bio.errors }}
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group ">
                         <label for="id_bio">Contas:</label>
                         {{ form.accounts }}
                         <div class="smal-erros">
@@ -67,6 +67,7 @@
     $("#id_accounts").select2({
         allowClear: true, 
         placeholder: 'Selecione uma Conta',
+        width: '100%',
     })
     
 </script>

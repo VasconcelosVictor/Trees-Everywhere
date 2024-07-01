@@ -68,14 +68,13 @@ class AccountCreationForm(forms.ModelForm):
         
             
         
-class PlantForm(forms.ModelForm):
-    class Meta:
-        model = Plant
-        fields = ['name', 'scientific_name']
+class PlantForm(forms.Form):
+   
 
-
-    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite o nome da Planta'}))
-    scientific_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite o nome Cietífico da planta'}))
+    name = forms.ModelChoiceField(queryset=Plant.objects.all().order_by('name'), 
+                                     required=True, 
+                                     widget=forms.Select(attrs={"class": "form-control"}))
+    
     age = forms.IntegerField()
     latitude =  forms.DecimalField(max_digits=9, decimal_places=6)
     longiture = forms.DecimalField(max_digits=9, decimal_places=6)
@@ -105,6 +104,8 @@ class ProfileForm(forms.Form):
     accounts = forms.ModelMultipleChoiceField(queryset=Account.objects.filter(active=True).order_by('id'),
                                      initial=Account.objects.filter(active=True).first(),
                                        widget=forms.SelectMultiple(attrs={'class': 'form-control multiselect select2 '}))
+    
+    
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
@@ -119,8 +120,5 @@ class ProfileForm(forms.Form):
             if profile:
                 self.fields['bio'].initial = profile.bio
 
-
-
-
-
+    
 

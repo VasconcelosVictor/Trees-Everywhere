@@ -58,6 +58,13 @@ h6 {
     font-size: 0.9em;
 }
 
+.select2-container {
+  width: 100% !important;
+}
+
+.select2-selection {
+  width: 100% !important;
+}
 
 
 
@@ -291,7 +298,7 @@ h6 {
 
 .navbar .getstarted,
 .navbar .getstarted:focus {
-  color: #5cb874;
+  color: #222222;
   padding: 8px 25px;
   margin-left: 30px;
   border-radius: 4px;

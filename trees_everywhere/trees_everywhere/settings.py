@@ -33,6 +33,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TESTING = True
 
 # Application definition
 
@@ -45,8 +46,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_tables2',
     'rest_framework',
+    'django.test',
     # My apps
     'core'
+
 ]
 
 MIDDLEWARE = [

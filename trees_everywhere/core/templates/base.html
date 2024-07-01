@@ -35,9 +35,6 @@
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  
- 
-  
-
   <!-- =======================================================
   * Template Name: Green
   * Template URL: https://bootstrapmade.com/green-free-one-page-bootstrap-template/
@@ -56,20 +53,30 @@
       <h1 class="logo me-auto"><a href="index.html">Trees Everywhere</a></h1>
       <nav id="navbar" class="navbar">
         <ul>
+          
           <li><a class="nav-link scrollto {% active request '^/home/$' %}" href="{% url 'home' %}">Suas Arvores</a></li>
           <li><a class="nav-link scrollto {% active request '^/trees/$' %} " href="{% url 'user_trees' %}">Lista de Arvores</a></li>
-          {% if request.user.is_superuser %}
+          
             
             <li class="dropdown">
-              <a class=" {% active request '^/account_list/$' %} {% active request '^/users_list/$' %}"  href="#"><span>Contas</span> <i class="bi bi-chevron-down"></i></a>
+              <a class=" {% active request '^/account_list/$' %} {% active request '^/users_list/$' %} {% active request '^/profile/' %}" 
+                  href="#">
+                  <span>Contas</span> <i class="bi bi-chevron-down"></i>
+              </a>
               <ul>
+                {% if request.user.is_superuser %}
                 <li><a href="{% url 'account_list' %}">Todas as Contas</a></li>
                 <li><a href="{% url 'users_list' %}">Todos os Usuarios</a></li>
+                {% endif %}
+                <li><a class="nav-link scrollto {% active request '^/profile/' %}  " href="{% url 'profile'  %}">Perfil</a></li>
+                <li><a class="nav-link scrollto" href="#" data-bs-toggle="modal" data-bs-target="#changeAccount">Trocar conta</a></li>
+      
+                <li><a class="nav-link scrollto" href="{% url 'logout' %}">Logout</a></li>
               </ul>
             </li>
-          {% endif %}
-          <li><a class="nav-link scrollto {% active request '^/profile/' %}  " href="{% url 'profile' request.user.id %}">Perfil</a></li>
-          <li><a class="nav-link scrollto" href="{% url 'logout' %}">Logout</a></li>
+            {% if request.user.is_superuser %}
+            <li><a class="getstarted scrollto" href="#" data-bs-toggle="modal" data-bs-target="#addPlant">Adicionar Planta</a></li>
+            {% endif %}
 
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -117,7 +124,124 @@
 
   <!-- Template Main JS File -->
   <script src="{% static 'js/main.js' %} "></script>
+  <div class="modal fade" id="changeAccount" tabindex="-1" aria-labelledby="changeAccountLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"> <!-- Adicione a classe modal-dialog-centered -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="changeAccountLabel">Trocar Conta</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Conteúdo do formulário para trocar de conta -->
+          <form>
+            <div class="mb-3">
+              <select name="change_account" id="id_change_account" class="form-control">
+                
+                {% for ac in request.user.accounts.all %}
+                  <option value="{{ac.id}}">{{ac}}</option>
+                {% endfor %}
+                  
+              </select>
+            </div>
+            <button type="button" id="change_account" class="btns-all">Trocar Conta</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <div class="modal fade" id="addPlant" tabindex="-1" aria-labelledby="addPlant" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"> <!-- Adicione a classe modal-dialog-centered -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addPlantLabel">Adcionar Planta</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Conteúdo do formulário para trocar de conta -->
+          <form>
+            <div class="mb-3">
+              <div class="form-group">
+                <label for="id_plant">Nome:</label>
+                <input type="text" name="plant_name" class="form-control" placeholder="Nome da Planta" required="" id="id_plant_name">
+              </div>
+              <div class="form-group">
+                <label for="id_plant">Nome Científico:</label>
+                <input type="text" name="scientific_name" class="form-control" placeholder="Nome Científico" required="" id="id_scientific_name_plant">
+              </div>
+            </div>
+            <button type="button" id="add_tree" class="btns-all">Adicionar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  
 </body>
+<script>
+  $("#change_account").click(function(){
+    const account  = $("#id_change_account").val();
+    console.log(account)
+    $.ajax({
+        url : "{% url 'change_account' %}",
+        method : 'GET',
+        data : {'account': account} ,
+        success : function(data){
+          console.log(data)
+          Swal.fire({
+              title: 'Conta Alterada!',
+              text: 'Você alterou a Conta logada no seu Usuário :)',
+              icon: 'success',
+              confirmButtonText: 'Confirmar',
+              confirmButtonColor: '#5cb874' 
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location.reload();
+              }
+            });
+        
+        },
+        error : function (error){
+          console.log(error)
+        }
+    }) 
+  })
+
+  $("#add_tree").click(function(){
+    const name  = $("#id_plant_name").val();
+    const scientific_name  = $("#id_scientific_name_plant").val();
+   
+    $.ajax({
+        url : "{% url 'add_plant' %}",
+        method : 'GET',
+        data : {'name': name, 
+                'scientific_name': scientific_name,
+        } ,
+        success : function(data){
+          console.log(data)
+          Swal.fire({
+              title: 'Planta Adicionada!',
+              text: 'Você Adicionou uma planta na base de dados :)',
+              icon: 'success',
+              confirmButtonText: 'Confirmar',
+              confirmButtonColor: '#5cb874' 
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location.reload();
+              }
+            });
+        
+        },
+        error : function (error){
+          console.log(error)
+        }
+    }) 
+  })
+
+  
+
+</script>
 
 </html>

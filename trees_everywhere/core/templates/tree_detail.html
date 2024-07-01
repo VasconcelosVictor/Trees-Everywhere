@@ -16,7 +16,7 @@
                         <span>Idade : {{tree.age}}</span>
                     </div>
                     <div>
-                        <span>Plantada em : {{ tree.planted_at }}</span>
+                        <span>Cadastrado em : {{ tree.planted_at }}</span>
                     </div>
                     
                     <div>
@@ -29,6 +29,9 @@
                         <span>Latitude : {{ tree.latitude  }}</span>
                     </div>
                     <div>
+                      <span>Conta : {{ tree.account  }}</span>
+                  </div>
+                    <div>
                       <a href="{% url 'edit_tree' tree.id %}">Editar</a>
                     </div>       
                 </div>
@@ -36,7 +39,7 @@
         </div>
     </div>
 
-    <h4 style="margin-top: 50px;">Lista de {{tree.plant.scientific_name}} Plantados</h4>
+    <h4 style="margin-top: 50px;">Lista de {{tree.plant.name}} Plantados</h4>
 
     {%if page_obj %}
       <div class="pagination">
@@ -58,6 +61,9 @@
                 <small style="font-weight: 600;">
                   {{tree.plant.scientific_name}}
                 </small>
+                <p style="font-weight: 600;">
+                  Usuario:  {{tree.user}}
+                </p>
                
               </div>
             </a>

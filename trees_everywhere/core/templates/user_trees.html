@@ -10,7 +10,7 @@
  
   <div class="section-title">
     <h2 >Suas Arvores</h2>
-    <p>Apenas as Arvores plantadas por você</p>
+    <p class="sub-title">Apenas as Arvores plantadas por você</p>
   </div>
 
  
@@ -25,7 +25,7 @@
       <p>Itens {{count}} </p>
       
       <div class="float-right" style="max-width: 18%;" >
-        <a style="font-weight: 700;" class="btns-all text-center " href="{% url 'add_tree' %}" >Adicionar Arvore <i class='bx bxs-plus-circle' ></i></a>
+        <a style="font-weight: 700;" class="btns-all text-center " href="{% url 'add_tree' %}" >Plantar Arvore <i class='bx bxs-plus-circle' ></i></a>
       </div>
       <hr>
     </div>
@@ -39,6 +39,7 @@
                 {{tree.plant.scientific_name}}
               </small>
               <p class="mb-1">Idade: {{ tree.age }} anos </p>
+              <p class="mb-1">Cadastrado em : {{ tree.planted_at }} anos </p>
             </div>
           </a>
           
@@ -51,7 +52,7 @@
     <div>
       <p>Itens {{count}} </p>
       <div class="float-right" style="max-width: 18%;" >
-        <a style="font-weight: 700;" class="btns-all text-center " href="{% url 'add_tree' %}" >Adicionar Arvore <i class='bx bxs-plus-circle' ></i></a>
+        <a style="font-weight: 700;" class="btns-all text-center " href="{% url 'add_tree' %}" >Plantar Arvore <i class='bx bxs-plus-circle' ></i></a>
       </div>
       <hr>
     </div>

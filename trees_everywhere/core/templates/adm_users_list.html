@@ -20,7 +20,7 @@
   <div class="list-group">
     {% for user in users %}
       <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-        <a href="{% url 'profile' user.id %}" class="d-flex w-100  list-group-item-action">
+        <a href="{% url 'profile' %}" class="d-flex w-100  list-group-item-action">
           <div>
             <h5 class="mb-1">{{ user.username}}</h5>
             <small style="font-weight: 600;" class="">

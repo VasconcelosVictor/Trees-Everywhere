@@ -26,7 +26,8 @@
                 </div>
                 <p>Arvores Plantadas : {{count}} </p>
                 <div>
-                  <p>Contas: {% for account in user.accounts.all %} {{account}}.  {% endfor %}</p>
+                  <p>Suas contas: {% for account in user.accounts.all %} {{account}}.  {% endfor %}</p>
+                  <p>Logado em  :  <strong>{{account.name | upper }}</strong></p>
                 </div>
                 
                 <div>
