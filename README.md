@@ -136,9 +136,6 @@ Se você deseja contribuir para o projeto, siga estas etapas:
     ```
 5. **Abra um Pull Request**
 
-## Licença
-
-Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ## Contato
 
