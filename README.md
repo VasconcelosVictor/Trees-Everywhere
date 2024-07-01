@@ -36,29 +36,53 @@
     ```
 
 4. **Configure o banco de dados:**
+    Modifique as configurações de Banco de Dados pra sua Base.
+    ```python
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'SEU DATABASE',
+            'USER': 'SEU USUARIO',
+            'PASSWORD': 'SUA SENHA',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+
+    }
+    
+     ```
+
     ```bash
     python manage.py migrate
     ```
 
-5. **Crie um superusuário:**
+6. **Crie um superusuário:**
     ```bash
     python manage.py createsuperuser
     ```
 
-6. **Inicie o servidor de desenvolvimento:**
+7. **Inicie o servidor de desenvolvimento:**
     ```bash
     python manage.py runserver
     ```
 
-7. **Acesse a aplicação:**
+8. **Acesse a aplicação:**
     Abra o navegador e vá para `http://localhost:8000`
 
 ## Uso
 
-- **Registro de Usuário:** Vá para a página de registro e crie uma conta.
+- **Usuario Adm**
+- **Registro de Usuário:** Vá para a página de Admin e as  contas do seu sistema e adcione os usuários a conta que ele pertencer.
 - **Login:** Faça login com suas credenciais.
+- **Todas as Contas:** Em todas as contas voce pode Vizualiar as contas do sistema, la voce também pode adcionar editar ou excluir uma conta.
+- **Todos os Usuários:** Em todos os usuário voce pode adcionar editar ou excluir um usuario .
+
+- **Usuario**
+- **Cadastro de Plantas:** Com seu Usuário administrador Logado clique em Cadastrar Plantas pra adicionar plantas a sua base de dados.
 - **Adicionar Árvore:** Navegue até a página de adicionar árvore, clique no mapa para definir a localização, preencha os detalhes e salve.
-- **Visualizar Mapa:** Vá para a página do mapa para visualizar todas as árvores plantadas.
+- **Visualizar Detalhes:** Clique em cima de uma arvore que você plantou e visualize as informações sobre ela.
+- **Perfil:** Em perfil você pode visuzualizar suas informações e também edita-las.
+- 
 
 ## Contribuição
 
@@ -86,6 +110,6 @@ Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICEN
 ## Contato
 
 - **Nome:** Victor Vasconcelos
-- **Email:** [seu-email@example.com](mailto:seu-email@example.com)
-- **LinkedIn:** [Seu Perfil LinkedIn](https://www.linkedin.com/in/seu-perfil-linkedin/)
+- **Email:** [seu-email@example.com](mailto:victorvasoncelos6x@hmail.com)
+- **LinkedIn:** [Seu Perfil LinkedIn](https://www.linkedin.com/in/victor-vasconcelos-barbosa/)
 
