@@ -15,6 +15,7 @@
 
 - Python 3.8+
 - Django 3.2+
+- PostgreSQL
 
 ## Instalação
 
