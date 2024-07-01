@@ -56,6 +56,13 @@
     python manage.py migrate
     ```
 
+5. **Modifique o ALLOWED_HOSTS**
+- no arquivo settings.py modifique a constante ALLOWED_HOSTS 
+```python
+ALLOWED_HOSTS=[]
+
+```
+
 6. **Crie um superusuário:**
     ```bash
     python manage.py createsuperuser
