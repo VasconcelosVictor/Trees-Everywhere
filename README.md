@@ -59,6 +59,7 @@
 5. **Modifique o ALLOWED_HOSTS**
 - no arquivo settings.py modifique a constante ALLOWED_HOSTS 
 ```python
+DEBUG=True
 ALLOWED_HOSTS=[]
 
 ```
