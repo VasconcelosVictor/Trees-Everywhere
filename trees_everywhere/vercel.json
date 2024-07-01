@@ -1,22 +1,28 @@
 {
-    "builds": [{
+    "version": 2,
+    "builds": [
+      {
         "src": "trees_everywhere/wsgi.py",
         "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
-    }],
+        "config": {
+          "maxLambdaSize": "15mb",
+          "runtime": "python3.9"
+        }
+      }
+    ],
     "routes": [
-    {
+      {
         "src": "/static/(.*)",
-        "dest": "trees_everywhere/static/"
-    },
-    {
+        "dest": "trees_everywhere/static/$1"
+      },
+      {
         "src": "/media/(.*)",
-        "dest": "trees_everywhere/media/"
-    },
+        "dest": "trees_everywhere/media/$1"
+      },
       {
         "src": "/(.*)",
         "dest": "trees_everywhere/wsgi.py"
       }
     ]
   }
-
+  
