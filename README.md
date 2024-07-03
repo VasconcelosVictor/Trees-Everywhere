@@ -56,6 +56,8 @@
     
      ```
 
+    ##ATENÇÃO SE VOCE SOFRER COM PROBLEMAS DE MIGRAÇÃO, COMENTE TODO OS ARQUIVOS PRO PROJETO QUE INTERAJAM COM O MODELS E RODE O PYTHON MANAGE.PY MAKEMIGRATION E O MIGRATE.
+
     ```bash
     python manage.py migrate
     ```
@@ -147,6 +149,8 @@ Se você deseja contribuir para o projeto, siga estas etapas:
     git push origin feature/nova-feature
     ```
 5. **Abra um Pull Request**
+
+
 
 
 ## Contato
